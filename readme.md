@@ -1,5 +1,4 @@
-# Server file for markdown-blog 
-### (https://github.com/djgupta820/markdown-blog)
+# Server file for <a href="https://github.com/djgupta820/markdown-blog"> markdown-blog </a> 
 
 This repository consists all the API(s) required for running markdown-blog.
 
