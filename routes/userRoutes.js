@@ -17,9 +17,13 @@ router.post('/login', async (req, res)=>{
     password = crypto.createHash('sha256').update(password).digest('hex')
     try {
         const user = await User.findOne({username: username, password: password})
-        res.json({user: user})
+        if(user){
+            res.json({user: user, success:true})
+        }else{
+            res.json({user: null, success:false})
+        }
     } catch (error) {
-        res.json(error)
+        res.json({error: error, success: false})
     }
 })
 
@@ -66,7 +70,8 @@ router.post('/change-password', async (req, res)=>{
     const {password, user} = req.body
     const passwd = crypto.createHash('sha256').update(password).digest('hex')
     try {
-        await User.updateOne({ userId: user }, { $set: { password: passwd } })
+        await User.updateOne({ username: user }, { $set: { password: passwd } })
+        .then((msg) => console.log(msg))
         res.send({success: 'password changed successfully'})
     } catch (error) {
         res.json({error: error.message})
